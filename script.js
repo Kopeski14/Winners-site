@@ -1,5 +1,98 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    /* --- Smooth Scrolling (Lenis) --- */
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+
+    /* --- Custom Cursor --- */
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    if (cursor && cursorFollower) {
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Move inner dot instantly
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        // Smooth follow logic for the outer ring
+        function animateFollower() {
+            // Easing lerp
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+
+            cursorFollower.style.left = followerX + 'px';
+            cursorFollower.style.top = followerY + 'px';
+
+            requestAnimationFrame(animateFollower);
+        }
+        animateFollower();
+
+        // Hover effect for links and buttons
+        const interactives = document.querySelectorAll('a, button, input, select, textarea');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+                cursorFollower.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+                cursorFollower.classList.remove('active');
+            });
+        });
+    }
+
+    /* --- Magnetic Buttons --- */
+    const magneticElements = document.querySelectorAll('.btn-primary, .btn-hero, .btn-nav');
+
+    magneticElements.forEach(elem => {
+        elem.addEventListener('mousemove', (e) => {
+            const rect = elem.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            // Move item slightly towards mouse
+            gsap.to(elem, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        elem.addEventListener('mouseleave', () => {
+            // Reset position
+            gsap.to(elem, {
+                x: 0,
+                y: 0,
+                duration: 0.7,
+                ease: 'elastic.out(1, 0.3)'
+            });
+        });
+    });
+
     /* --- Hero Title Scroll Animation --- */
     gsap.registerPlugin(ScrollTrigger);
     const heroTitle = document.getElementById('hero-title');
