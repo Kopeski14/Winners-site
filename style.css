@@ -506,6 +506,12 @@ h6 {
     font-family: 'Inter', sans-serif;
 }
 
+.para-quem-list-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
 /* Lists */
 .check-list,
 .cross-list {
@@ -517,20 +523,23 @@ h6 {
 
 .check-list li,
 .cross-list li {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     position: relative;
-    padding-left: 28px;
-    font-size: 1.1rem;
+    padding-left: 36px;
+    font-size: 1.25rem;
     color: #e4e4e7;
     text-align: left;
+    line-height: 1.4;
 }
 
 .check-list li::before {
     content: '✓';
     position: absolute;
     left: 0;
+    top: 2px;
     color: var(--gold);
     font-weight: bold;
+    font-size: 1.25rem;
 }
 
 .cross-list li::before {
