@@ -510,14 +510,19 @@ h6 {
 .check-list,
 .cross-list {
     list-style: none;
+    margin-top: 1.5rem;
+    text-align: left;
+    display: inline-block;
 }
 
 .check-list li,
 .cross-list li {
     margin-bottom: 1rem;
-    padding-left: 2rem;
     position: relative;
+    padding-left: 28px;
     font-size: 1.1rem;
+    color: #e4e4e7;
+    text-align: left;
 }
 
 .check-list li::before {
