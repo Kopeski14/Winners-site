@@ -25,8 +25,9 @@
 
 <body>
 
-
-    <!-- Scroll Progress Bar -->
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div> <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scroll-progress"></div>
 
     <!-- Navigation -->
@@ -216,7 +217,7 @@
                     <div class="stats-grid" id="stats">
                         <div class="stat-box animate-scale">
                             <h3 class="counter gold-text" data-target="80">0</h3><span>%</span>
-                            <p>De crescimento em 4 meses</p>
+                            <p>Crescimento em 4 meses</p>
                         </div>
                         <div class="stat-box animate-scale delay-1">
                             <span>+ de</span>
@@ -441,9 +442,10 @@
         </div>
     </footer>
 
-    <!-- GSAP and MatchMedia -->
+    <!-- GSAP, ScrollTrigger and Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
 
     <!-- Scripts -->
     <script src="script.js"></script>
