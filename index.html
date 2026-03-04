@@ -1,1212 +1,398 @@
-/* ==========================================================================
-   Base Styles & Variables
-   ========================================================================== */
-:root {
-    --bg-base: #0a0a0a;
-    --bg-darker: #050505;
-    --bg-card: #151515;
-    --text-primary: #ffffff;
-    --text-muted: #a1a1aa;
-
-    /* Gold gradients and colors */
-    --gold: #d4af37;
-    --gold-light: #f3e5ab;
-    --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #d4af37 100%);
-
-    --border-color: rgba(255, 255, 255, 0.08);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    /* Hide scrollbar for a cleaner look */
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold) var(--bg-base);
-}
-
-body {
-    background-color: var(--bg-base);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.mt-1 {
-    margin-top: 1rem;
-}
-
-.mt-2 {
-    margin-top: 2rem;
-}
-
-.mt-4 {
-    margin-top: 4rem;
-}
-
-/* Utilities */
-.gold {
-    color: var(--gold);
-}
-
-.gold-text {
-    background: var(--gold-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-}
-
-.text-muted {
-    color: var(--text-muted);
-}
-
-.bg-darker {
-    background-color: rgba(5, 5, 5, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.border-top {
-    border-top: 1px solid var(--border-color);
-}
-
-.border-left {
-    border-left: 1px solid var(--border-color);
-    padding-left: 2rem;
-}
-
-@media(max-width: 768px) {
-    .border-left {
-        border-left: none;
-        border-top: 1px solid var(--border-color);
-        padding-left: 0;
-        padding-top: 2rem;
-    }
-}
-
-/* Scroll Progress */
-.scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    background: var(--gold-gradient);
-    width: 0%;
-    z-index: 9999;
-    transition: width 0.1s ease;
-}
-
-/* ==========================================================================
-   Custom Cursor
-   ========================================================================== */
-body {
-    cursor: none;
-    /* Hide default cursor */
-}
-
-a,
-button,
-input,
-select,
-textarea {
-    cursor: none;
-    /* Keep hidden on interactive elements to use custom */
-}
-
-.cursor {
-    width: 8px;
-    height: 8px;
-    background-color: var(--gold);
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 10000;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, background-color 0.3s;
-}
-
-.cursor-follower {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(212, 175, 55, 0.5);
-    /* Gold outline */
-    border-radius: 50%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, border-color 0.3s;
-}
-
-/* Hover States for Cursor */
-.cursor.active {
-    width: 0;
-    height: 0;
-    background-color: transparent;
-}
-
-.cursor-follower.active {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: transparent;
-    backdrop-filter: blur(2px);
-}
-
-
-
-
-/* ==========================================================================
-   Navigation
-   ========================================================================== */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 1.2rem 0;
-    z-index: 1000;
-    transition: var(--transition);
-}
-
-.navbar.scrolled {
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
-    padding: 0.8rem 0;
-}
-
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 1.4rem;
-    font-weight: 800;
-    text-decoration: none;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-}
-
-.nav-links {
-    display: none;
-    gap: 1.5rem;
-}
-
-.nav-links a {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-.nav-links a:hover {
-    color: #ffffff;
-}
-
-.btn-nav {
-    display: none;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-    padding: 0.6rem 1.4rem;
-    border-radius: 0;
-    text-decoration: none;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-.btn-nav:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
-}
-
-/* Mobile Menu Toggle */
-.mobile-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1002;
-}
-
-.mobile-toggle span {
-    width: 25px;
-    height: 2px;
-    background-color: var(--text-primary);
-    transition: var(--transition);
-}
-
-.mobile-toggle.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-.mobile-toggle.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-toggle.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Mobile Menu Overlay */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(5, 5, 5, 0.98);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    z-index: 1001;
-    opacity: 0;
-    pointer-events: none;
-    transition: var(--transition);
-}
-
-.mobile-menu.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-.mobile-link {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-@media(min-width: 1024px) {
-
-    .nav-links,
-    .btn-nav {
-        display: flex;
-    }
-
-    .mobile-toggle {
-        display: none;
-    }
-}
-
-/* ==========================================================================
-   Buttons Setup
-   ========================================================================== */
-.btn-primary {
-    background: var(--gold-gradient);
-    color: var(--bg-base);
-    padding: 1rem 2.5rem;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    text-decoration: none;
-    display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--text-primary);
-    padding: 1rem 2.5rem;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-decoration: none;
-    display: inline-block;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: var(--transition);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #fff;
-}
-
-.center-btn {
-    text-align: center;
-}
-
-
-/* ==========================================================================
-   Hero Section
-   ========================================================================== */
-.hero {
-    position: relative;
-    height: 100vh;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-}
-
-/* ==========================================================================
-   Full Page Background Video
-   ========================================================================== */
-.fixed-video-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: -10;
-    overflow: hidden;
-    background-color: var(--bg-base);
-}
-
-.fixed-video-bg video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-}
-
-.global-video-overlay {
-    position: absolute;
-    inset: 0;
-    /* Constant dark overlay over the whole page video */
-    background: rgba(10, 10, 10, 0.75);
-    pointer-events: none;
-}
-
-/* ==========================================================================
-   Hero Section
-   ========================================================================== */
-.hero {
-    position: relative;
-    height: 100vh;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-}
-
-
-
-.hero-container {
-    width: 100%;
-    position: relative;
-    z-index: 10;
-}
-
-.hero-content {
-    max-width: 800px;
-    padding-top: 80px;
-}
-
-.hero h1 {
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
-    margin-bottom: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-}
-
-.hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.4rem);
-    color: #f4f4f5;
-    margin-bottom: 2.5rem;
-    max-width: 550px;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-}
-
-.hero-ctas {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.btn-hero {
-    background: transparent;
-    color: #ffffff;
-    padding: 0.8rem 2.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    text-decoration: none;
-    transition: var(--transition);
-    border-radius: 0;
-}
-
-.btn-hero:hover {
-    background: #ffffff;
-    color: #000000;
-}
-
-/* ==========================================================================
-   General Section Layout
-   ========================================================================== */
-.section {
-    padding: 8rem 0;
-    position: relative;
-    /* Transparent or semi transparent backdrops */
-    background: rgba(10, 10, 10, 0.6);
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 4rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.section-header h2 {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    margin-bottom: 1rem;
-}
-
-.section-header p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-}
-
-.grid-4 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.two-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-}
-
-@media(max-width: 768px) {
-    .two-cols {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-}
-
-/* Cards */
-.card {
-    background: rgba(21, 21, 21, 0.7);
-    /* Make semi-transparent */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--border-color);
-    padding: 2rem;
-    border-radius: 8px;
-    transition: var(--transition);
-}
-
-.card:hover {
-    border-color: rgba(212, 175, 55, 0.4);
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-}
-
-.card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-family: 'Inter', sans-serif;
-}
-
-.para-quem-list-wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-/* Lists */
-.check-list,
-.cross-list {
-    list-style: none;
-    margin-top: 1.5rem;
-    text-align: left;
-    display: inline-block;
-}
-
-.check-list li,
-.cross-list li {
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-left: 36px;
-    font-size: 1.25rem;
-    color: #e4e4e7;
-    text-align: left;
-    line-height: 1.4;
-}
-
-.check-list li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    top: 2px;
-    color: var(--gold);
-    font-weight: bold;
-    font-size: 1.25rem;
-}
-
-.cross-list li::before {
-    content: '✕';
-    position: absolute;
-    left: 0;
-    color: #ef4444;
-    /* Subtle red */
-    font-weight: bold;
-}
-
-/* Deliverables */
-.deliverable-item {
-    background: var(--bg-base);
-    /* Contrast against bg-darker */
-    padding: 2.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.deliverable-item .icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.deliverable-item h4 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-/* Stats Section */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.stat-box h3 {
-    font-size: 4rem;
-    display: inline-block;
-    line-height: 1;
-}
-
-.stat-box span {
-    font-size: 3rem;
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    font-weight: 600;
-}
-
-.stat-box p {
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 1rem;
-}
-
-/* Timeline */
-.timeline {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 24px;
-    height: 100%;
-    width: 2px;
-    background: var(--border-color);
-}
-
-.timeline-step {
-    position: relative;
-    padding-left: 4rem;
-    margin-bottom: 3rem;
-}
-
-.timeline-step:last-child {
-    margin-bottom: 0;
-}
-
-.step-marker {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 50px;
-    height: 50px;
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(5px);
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--gold);
-    z-index: 2;
-}
-
-.step-content h4 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    padding-top: 12px;
-}
-
-/* FAQ Accordion */
-.faq-container {
-    max-width: 800px;
-}
-
-.accordion-item {
-    border-bottom: 1px solid var(--border-color);
-}
-
-.accordion-header {
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    padding: 1.5rem 0;
-    font-size: 1.25rem;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-primary);
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.accordion-header::after {
-    content: '+';
-    color: var(--gold);
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
-}
-
-.accordion-item.active .accordion-header::after {
-    transform: rotate(45deg);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.accordion-item.active .accordion-content {
-    max-height: 500px;
-    /* Arbitrary large number */
-}
-
-.accordion-content p {
-    padding-bottom: 1.5rem;
-}
-
-
-/* Form */
-.form-wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-    background: rgba(21, 21, 21, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 3rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.form-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-/* Footer */
-.footer {
-    padding: 4rem 0 2rem 0;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.footer-links-group {
-    display: flex;
-    gap: 2rem;
-}
-
-.footer-links-group a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-links-group a:hover {
-    color: var(--gold);
-}
-
-.footer-bottom {
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 2rem;
-}
-
-/* ==========================================================================
-   Animations
-   ========================================================================== */
-
-/* Initially hide elements for scroll animation */
-.animate-fade,
-.animate-slide-up,
-.animate-slide-left,
-.animate-slide-right,
-.animate-scale {
-    opacity: 0;
-}
-
-.animate-slide-up {
-    transform: translateY(40px);
-}
-
-.animate-slide-left {
-    transform: translateX(40px);
-}
-
-.animate-slide-right {
-    transform: translateX(-40px);
-}
-
-.animate-scale {
-    transform: scale(0.9);
-}
-
-/* Animation Classes added via JS */
-.in-view {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.delay-1 {
-    transition-delay: 0.1s !important;
-}
-
-.delay-2 {
-    transition-delay: 0.2s !important;
-}
-
-.delay-3 {
-    transition-delay: 0.3s !important;
-}
-
-.delay-4 {
-    transition-delay: 0.4s !important;
-}
-
-.delay-5 {
-    transition-delay: 0.5s !important;
-}
-
-.delay-6 {
-    transition-delay: 0.6s !important;
-}
-
-/* Handle reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-
-    .animate-slide-up,
-    .animate-slide-left,
-    .animate-slide-right,
-    .animate-scale {
-        transform: none;
-    }
-}
-
-
-/* ==========================================================================
-   Updates for Premium Entrance & Audio Button
-   ========================================================================== */
-
-/* Navbar Layout Fixes */
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.nav-links {
-    flex: 1;
-    justify-content: center;
-}
-
-/* Audio Toggle Premium Button */
-.audio-toggle-btn.premium-pulse {
-    width: auto;
-    height: auto;
-    padding: 0.8rem 1.5rem;
-    border-radius: 99px;
-    gap: 10px;
-    background: rgba(10, 10, 10, 0.85);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
-    animation: premiumPulse 2s ease-in-out infinite alternate;
-}
-
-.audio-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--text-primary);
-}
-
-@keyframes premiumPulse {
-    0% {
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
-        border-color: rgba(212, 175, 55, 0.3);
-        transform: scale(1);
-    }
-
-    100% {
-        box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
-        border-color: rgba(212, 175, 55, 0.8);
-        transform: scale(1.02);
-    }
-}
-
-/* Scroll Down Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    z-index: 10;
-}
-
-.scroll-indicator span {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-}
-
-.mouse {
-    width: 24px;
-    height: 38px;
-    border: 2px solid var(--text-muted);
-    border-radius: 12px;
-    position: relative;
-    opacity: 0.7;
-}
-
-.wheel {
-    width: 4px;
-    height: 6px;
-    background: var(--gold);
-    border-radius: 2px;
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: scrollWheel 1.5s infinite;
-}
-
-@keyframes scrollWheel {
-    0% {
-        top: 6px;
-        opacity: 1;
-    }
-
-    100% {
-        top: 18px;
-        opacity: 0;
-    }
-}
-
-/* Hero Entrance Animation */
-.animate-hero {
-    animation: heroRise 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes heroRise {
-    0% {
-        opacity: 0;
-        transform: translateY(60px);
-        filter: blur(10px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.footer-links-group {
-    display: flex;
-    gap: 2rem;
-}
-
-.footer-links-group a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-links-group a:hover {
-    color: var(--gold);
-}
-
-.footer-bottom {
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 2rem;
-}
-
-/* ==========================================================================
-   Animations
-   ========================================================================== */
-
-/* Initially hide elements for scroll animation */
-.animate-fade,
-.animate-slide-up,
-.animate-slide-left,
-.animate-slide-right,
-.animate-scale {
-    opacity: 0;
-}
-
-.animate-slide-up {
-    transform: translateY(40px);
-}
-
-.animate-slide-left {
-    transform: translateX(40px);
-}
-
-.animate-slide-right {
-    transform: translateX(-40px);
-}
-
-.animate-scale {
-    transform: scale(0.9);
-}
-
-/* Animation Classes added via JS */
-.in-view {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.delay-1 {
-    transition-delay: 0.1s !important;
-}
-
-.delay-2 {
-    transition-delay: 0.2s !important;
-}
-
-.delay-3 {
-    transition-delay: 0.3s !important;
-}
-
-.delay-4 {
-    transition-delay: 0.4s !important;
-}
-
-.delay-5 {
-    transition-delay: 0.5s !important;
-}
-
-.delay-6 {
-    transition-delay: 0.6s !important;
-}
-
-/* ==========================================================================
-   Mobile Responsiveness
-   ========================================================================== */
-@media(max-width: 768px) {
-    .section {
-        padding: 4rem 0;
-    }
-
-    .hero-content {
-        padding-top: 40px;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: clamp(2.5rem, 10vw, 3.5rem);
-    }
-
-    .hero-subtitle {
-        font-size: 1rem;
-        margin: 0 auto 2rem auto;
-    }
-
-    .section-header h2 {
-        font-size: clamp(2rem, 8vw, 2.5rem);
-    }
-
-    .para-quem-list-wrapper {
-        padding: 0 1rem;
-    }
-
-    .check-list li,
-    .cross-list li {
-        font-size: 1.05rem;
-        padding-left: 28px;
-        margin-bottom: 1.25rem;
-    }
-
-    .check-list li::before {
-        font-size: 1.05rem;
-        top: 2px;
-    }
-
-    .hero-ctas {
-        justify-content: center;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .btn-hero,
-    .btn-primary {
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 1.5rem;
-    }
-
-    .footer-links-group {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-    }
-
-    .section-header {
-        margin-bottom: 3rem;
-        padding: 0 1rem;
-    }
-
-    .card {
-        padding: 1.5rem !important;
-        /* Override inline style on values grid */
-    }
-
-    .values-grid {
-        gap: 1rem !important;
-        padding: 0 1rem;
-    }
-}
-
-
-
-/* Handle reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-
-    .animate-scale {
-        transform: none;
-    }
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winners Club | Winners Club</title>
+    <meta name="description" content="Mentoria e comunidade exclusiva para empresários e líderes do Winner's Club.">
+
+    <!-- Open Graph Placeholders -->
+    <meta property="og:title" content="Winners Club">
+    <meta property="og:description" content="Winners Club.">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Winners+Club+OG+Image">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div> <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">WINNERS CLUB</a>
+            <nav class="nav-links">
+                <a href="#sobre">Sobre</a>
+                <a href="#para-quem">Para Quem</a>
+                <a href="#entregaveis">O Que Você Recebe</a>
+                <a href="#resultados">Resultados</a>
+                <a href="#depoimentos">Depoimentos</a>
+                <a href="#como-funciona">Como Funciona</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <!-- CTA Configurable WhatsApp Link -->
+            <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Winners%20Club."
+                class="btn-nav" target="_blank" rel="noopener noreferrer">Conversa Estratégica</a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <nav class="mobile-menu" id="mobile-menu">
+        <a href="#sobre" class="mobile-link">Sobre</a>
+        <a href="#para-quem" class="mobile-link">Para Quem</a>
+        <a href="#entregaveis" class="mobile-link">O Que Recebe</a>
+        <a href="#resultados" class="mobile-link">Resultados</a>
+        <a href="#depoimentos" class="mobile-link">Depoimentos</a>
+        <a href="#como-funciona" class="mobile-link">Como Funciona</a>
+        <a href="#faq" class="mobile-link">FAQ</a>
+        <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Winners%20Club."
+            class="mobile-link gold" target="_blank" rel="noopener noreferrer">Aplicar Agora</a>
+    </nav>
+
+    <!-- FULL PAGE VIDEO BACKGROUND -->
+    <div class="fixed-video-bg">
+        <video autoplay muted loop playsinline id="hero-video" class="hero-video"
+            poster="https://via.placeholder.com/1920x1080/0a0a0a/ffffff?text=Winners+Club+Video+Fallback">
+            <source src="bg-compressed.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+        <div class="global-video-overlay"></div>
+    </div>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section class="hero" id="inicio">
+
+            <div class="container hero-container">
+                <div class="hero-content animate-hero">
+                    <h1 id="hero-title">Winners <br>Club</h1>
+                    <p class="hero-subtitle">Não é apenas teoria. É execução guiada, networking de altíssimo nível e
+                        clareza
+                        para o seu próximo grande salto.</p>
+
+                    <div class="hero-ctas">
+                        <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Winners%20Club."
+                            class="btn-hero" target="_blank" rel="noopener noreferrer">Quero Participar</a>
+                        <a href="https://wa.me/55996502738?text=Quero%20uma%20conversa%20estrat%C3%A9gica"
+                            class="btn-hero" target="_blank" rel="noopener noreferrer">Conversa Estratégica</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Down Indicator -->
+            <div class="scroll-indicator animate-fade delay-3">
+                <span>Descubra Mais</span>
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: O que é (Pilares) -->
+        <section class="section" id="sobre">
+            <div class="container">
+                <div class="section-header animate-slide-up">
+                    <h2>O que é o <span class="gold-text">Winners Club</span>?</h2>
+                    <p>Muitas mentorias vendem apenas motivação. Nós entregamos um ecossistema projetado para
+                        transformar o seu cenário atual.</p>
+                </div>
+
+                <div class="grid-4 pillars-grid">
+                    <div class="card animate-slide-up delay-1">
+                        <h3>Mentoria</h3>
+                        <p>Acesso direto a mentores com experiência comprovada no campo de batalha empresarial.</p>
+                    </div>
+                    <div class="card animate-slide-up delay-2">
+                        <h3>Comunidade</h3>
+                        <p>Conviva com empresários que jogam o mesmo jogo que você. Você é a média das pessoas que te
+                            cercam.</p>
+                    </div>
+                    <div class="card animate-slide-up delay-3">
+                        <h3>Execução</h3>
+                        <p>Planos de ação práticos para aplicar na sua empresa imediatamente, sem enrolação.</p>
+                    </div>
+                    <div class="card animate-slide-up delay-4">
+                        <h3>Crescimento</h3>
+                        <p>Resultados que se traduzem em previsibilidade, lucro e qualidade de vida.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Para quem é -->
+        <section class="section" id="para-quem">
+            <!-- Section 3: Para Quem -->
+            <section class="section" id="para-quem">
+                <div class="container">
+                    <div class="section-header animate-slide-up">
+                        <h2 class="gold-text">Este grupo é para você, empresário que:</h2>
+                    </div>
+
+                    <div class="center-content text-center animate-slide-up">
+                        <div class="para-quem-list-wrapper">
+                            <ul class="check-list">
+                                <li>Busca jogar um outro nível de jogo.</li>
+                                <li>Quer aumentar vendas, e faturamento.</li>
+                                <li>Está disposto a mudar e crescer a sua empresa.</li>
+                                <li>Busca acompanhamento direto para aumentar cada vez mais suas metas.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="center-btn mt-4 animate-slide-up">
+                        <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Winners%20Club."
+                            class="btn-primary" target="_blank" rel="noopener noreferrer">Estou Pronto para Entrar</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Entregáveis -->
+            <section class="section" id="entregaveis">
+                <div class="container">
+                    <div class="section-header animate-slide-up">
+                        <h2>O que <span class="gold-text">Você Recebe</span></h2>
+                        <p>Uma esteira completa de acompanhamento para não deixar você estagnar.</p>
+                    </div>
+
+                    <div class="grid-3 deliverables-grid">
+                        <div class="deliverable-item animate-slide-up delay-1">
+                            <div class="icon gold">🗓</div>
+                            <h4>Encontros Quinzenais</h4>
+                            <p>Encontros online com todos os membros do clube.</p>
+                        </div>
+                        <div class="deliverable-item animate-slide-up delay-2">
+                            <div class="icon gold">📁</div>
+                            <h4>Materiais Únicos</h4>
+                            <p>Materiais para a gestão empresarial.</p>
+                        </div>
+                        <div class="deliverable-item animate-slide-up delay-3">
+                            <div class="icon gold">👥</div>
+                            <h4>Mentoria Individual</h4>
+                            <p>Diagnóstico individual para mapear seus gargalos atuais e destravar o crescimento.</p>
+                        </div>
+                        <div class="deliverable-item animate-slide-up delay-4">
+                            <div class="icon gold">🚀</div>
+                            <h4>On-boarding</h4>
+                            <p>Logo na entrada para destravar e já iniciar o programa alcançando um outro nível.</p>
+                        </div>
+                        <div class="deliverable-item animate-slide-up delay-5">
+                            <div class="icon gold">💬</div>
+                            <h4>Comunidade 24/7</h4>
+                            <p>Um grupo exclusivo no WhatsApp apenas para membros selecionados a dedo.</p>
+                        </div>
+                        <div class="deliverable-item animate-slide-up delay-6">
+                            <div class="icon gold">🎟</div>
+                            <h4>Eventos Presenciais</h4>
+                            <p>Passaporte garantido para os encontros presenciais de imersão do Winners Club.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Resultados (Counters) -->
+            <section class="section" id="resultados">
+                <div class="container">
+                    <div class="section-header animate-slide-up">
+                        <h2>Nossos <span class="gold-text">Resultados</span></h2>
+                        <p>Os números refletem o compromisso dos nossos membros com a execução.</p>
+                    </div>
+
+                    <div class="stats-grid" id="stats">
+                        <div class="stat-box animate-scale">
+                            <h3 class="counter gold-text" data-target="80">0</h3><span>%</span>
+                            <p>Crescimento em 4 meses</p>
+                        </div>
+                        <div class="stat-box animate-scale delay-1">
+                            <span>+ de</span>
+                            <h3 class="counter gold-text" data-target="20">0</h3>
+                            <p>Membros Ativos</p>
+                        </div>
+                        <div class="stat-box animate-scale delay-2">
+                            <h3 class="gold-text">Garantido</h3>
+                            <p>ROI sobre investimento</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: Depoimentos -->
+            <section class="section" id="depoimentos">
+                <div class="container">
+                    <div class="section-header animate-slide-up">
+                        <h2>Palavras de quem <span class="gold-text">Executa</span></h2>
+                    </div>
+
+                    <div class="values-grid mt-4"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                        <div class="card animate-slide-up" style="text-align: center; padding: 3rem 2rem;">
+                            <div class="value-icon gold-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">🎯</div>
+                            <h3>Foco Extremo</h3>
+                            <p class="text-muted mt-1">Mais do que networking, somos um ambiente de execução focada.
+                                Aqui não há espaço para teóricos, apenas para quem faz acontecer.</p>
+                        </div>
+                        <div class="card animate-slide-up delay-1" style="text-align: center; padding: 3rem 2rem;">
+                            <div class="value-icon gold-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">🤝</div>
+                            <h3>Pele em Risco</h3>
+                            <p class="text-muted mt-1">Todos na mesa estão construindo algo real. Compartilhamos
+                                bastidores, erros e acertos sem filtros para um crescimento honesto.</p>
+                        </div>
+                        <div class="card animate-slide-up delay-2" style="text-align: center; padding: 3rem 2rem;">
+                            <div class="value-icon gold-text" style="font-size: 2.5rem; margin-bottom: 1.5rem;">📈</div>
+                            <h3>Crescimento Mútuo</h3>
+                            <p class="text-muted mt-1">O resultado do grupo é a soma dos resultados individuais. Quando
+                                um membro destrava e acelera, todos ao redor ganham.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Como Funciona -->
+            <section class="section" id="como-funciona">
+                <div class="container">
+                    <div class="section-header animate-slide-up">
+                        <h2>Como <span class="gold-text">Funciona</span></h2>
+                        <p>O processo seletivo garante a qualidade e o nível da nossa comunidade.</p>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-step animate-slide-up">
+                            <div class="step-marker">1</div>
+                            <div class="step-content">
+                                <h4>Aplicação</h4>
+                                <p>Você preenche o formulário ao final desta página contando um pouco do seu momento
+                                    atual.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-step animate-slide-up delay-1">
+                            <div class="step-marker">2</div>
+                            <div class="step-content">
+                                <h4>Conversa</h4>
+                                <p>Nosso time entra em contato pelo WhatsApp para alinhar expectativas e analisar seu
+                                    perfil.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step animate-slide-up delay-2">
+                            <div class="step-marker">3</div>
+                            <div class="step-content">
+                                <h4>Onboarding & Plano</h4>
+                                <p>Entrada na comunidade, acesso aos materiais e a primeira sessão para cravar suas
+                                    metas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8: FAQ -->
+            <section class="section" id="faq">
+                <div class="container faq-container">
+                    <div class="section-header animate-slide-up">
+                        <h2>Dúvidas <span class="gold-text">Frequentes</span></h2>
+                    </div>
+
+                    <div class="accordion animate-slide-up delay-1">
+                        <div class="accordion-item">
+                            <button class="accordion-header">Qual a duração do programa Winners Club?</button>
+                            <div class="accordion-content">
+                                <p>A assinatura padrão é de 12 meses. Após esse período, você pode optar pela renovação
+                                    para
+                                    se manter atualizado e acompanhando a comunidade.</p>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-header">Preciso ter empresa aberta para participar?</button>
+                            <div class="accordion-content">
+                                <p>O foco do grupo são empreendedores e líderes que já operam e desejam tracionar
+                                    resultados. Porém, se você ocupa forte papel de decisão e liderança, tem grande
+                                    potencial de absorção.</p>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <button class="accordion-header">Qual o valor do investimento?</button>
+                            <div class="accordion-content">
+                                <p>O passe para o nosso mastermind varia de acordo com lotes de expansão de vagas. Todo
+                                    o
+                                    lado financeiro e escopo de acesso será detalhado na sua call estratégica após a
+                                    aplicação.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 9: Aplicação -->
+            <section class="section" id="aplicacao">
+                <div class="container">
+                    <div class="form-wrapper animate-slide-up">
+                        <div class="form-header">
+                            <h2>Sua <span class="gold-text">Vaga</span>.</h2>
+                            <p>Toque no botão abaixo para falar diretamente com nossa equipe pelo WhatsApp.</p>
+                        </div>
+
+                        <div class="center-content text-center mt-4">
+                            <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20uma%20vaga%20no%20Winners%20Club."
+                                class="btn-primary" target="_blank" rel="noopener noreferrer"
+                                style="display: inline-block; padding: 1.2rem 3rem; font-size: 1.1rem; width: auto;">Falar
+                                com a Equipe no WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer border-top bg-darker">
+        <div class="container footer-content">
+            <div class="brand">
+                <a href="#" class="logo">WINNERS CLUB</a>
+                <p class="text-muted mt-1">Sua comunidade tática e networking imbatível.</p>
+            </div>
+
+            <div class="footer-links-group">
+                <a href="#">Privacidade</a>
+                <a href="#">Termos</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p class="text-muted">&copy; 2026 Winners Club. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP, ScrollTrigger and Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+
+</html>
