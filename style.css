@@ -68,6 +68,12 @@ h6 {
 }
 
 /* Utilities */
+/* Performance Utilities */
+.content-vis {
+    content-visibility: auto;
+    contain-intrinsic-size: 800px;
+}
+
 .gold {
     color: var(--gold);
 }
