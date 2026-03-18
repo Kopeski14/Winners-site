@@ -321,6 +321,23 @@ body {
 .entregaveis-v3 {
   padding: 10rem 5%; background: var(--bg-light-dark);
 }
+.video-container-v3 {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.video-container-v3 iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
 .grid-entregaveis {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px;
   background: rgba(255,255,255,0.05); max-width: 1200px; margin: 5rem auto 0;
