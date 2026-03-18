@@ -9,10 +9,14 @@
     <link rel="shortcut icon" href="favicon.svg?v=2">
     <link rel="apple-touch-icon" href="favicon.svg?v=2">
 
-    <!-- Open Graph Placeholders -->
-    <meta property="og:title" content="Winners Club">
-    <meta property="og:description" content="Winners Club.">
-    <meta property="og:image" content="https://via.placeholder.com/1200x630?text=Winners+Club+OG+Image">
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="poster.jpg" as="image">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Winners Club | The Exclusive Society">
+    <meta property="og:description" content="Mentoria e comunidade exclusiva para empresários e líderes do Winner's Club.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,19 +48,7 @@
             <a href="https://wa.me/55996502738?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Winners%20Club." class="link-hover hover-target gold-text" target="_blank" rel="noopener">WhatsApp</a>
         </div>
 
-        <button class="nav-menu-btn link-hover hover-target" id="mobile-toggle" style="display: none;">Menu [ + ]</button>
-        <script>
-            if (window.innerWidth <= 1000) {
-                document.getElementById('mobile-toggle').style.display = 'block';
-            }
-            window.addEventListener('resize', () => {
-                if (window.innerWidth <= 1000) {
-                    document.getElementById('mobile-toggle').style.display = 'block';
-                } else {
-                    document.getElementById('mobile-toggle').style.display = 'none';
-                }
-            });
-        </script>
+        <button class="nav-menu-btn link-hover hover-target" id="mobile-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-menu">Menu [ + ]</button>
     </nav>
 
     <!-- Mobile Menu Overlay -->
@@ -263,7 +255,7 @@
                     <h2 class="c-header-huge fade-up">A CULTURA</h2>
                     <p class="section-subtitle fade-up" style="margin-top:-6rem;">Os pilares inegociáveis que sustentam os resultados dos nossos membros.</p>
                     
-                    <div class="c-grid mt-4">
+                    <div class="c-grid">
                         <div class="c-item hover-target fade-up">
                             <div class="c-icon">♦</div>
                             <h3>POSICIONAMENTO DE VALOR</h3>
@@ -289,7 +281,7 @@
                 <p class="section-subtitle fade-up" style="margin-top:-1rem;">Preencha rigorosamente o formulário abaixo para analisarmos o momento atual da sua empresa.</p>
                 
                 <div class="app-frame-wrapper hover-target fade-up" style="border-radius: 20px;">
-                    <iframe src="https://winnersclub.yayforms.link/3A5beXJ" loading="lazy" scrolling="no" frameborder="0"></iframe>
+                    <iframe src="https://winnersclub.yayforms.link/3A5beXJ" loading="lazy" scrolling="no" title="Formulário de aplicação Winners Club" style="border: none;"></iframe>
                 </div>
             </section>
 
@@ -298,7 +290,7 @@
                 <div class="faq-container">
                     <h2 class="section-title fade-up" style="text-align: left; font-size: clamp(2.5rem, 5vw, 4rem);">DÚVIDAS <span style="color:var(--gold-primary); font-family:var(--font-accent); font-style:italic;">FREQUENTES</span></h2>
                     
-                    <div class="accordion-v3 fade-up mt-4">
+                    <div class="accordion-v3 fade-up">
                         <div class="acc-item">
                             <div class="acc-head hover-target">
                                 Qual a duração do programa Winners Club?
@@ -374,7 +366,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
