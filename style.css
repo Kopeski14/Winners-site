@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Oswald:wght@200;300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=Space+Grotesk:wght@300;400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;700&display=swap');
+/* Fonts loaded via <link> in HTML — no @import needed */
 
 :root {
   --bg-dark: #000000;
@@ -72,6 +71,10 @@ body {
   padding: 2.5rem 4rem; z-index: 1000;
   display: flex; justify-content: space-between; align-items: center;
   mix-blend-mode: difference;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.nav-avant.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .nav-links-desktop {
@@ -107,6 +110,7 @@ body {
   font-family: var(--font-body); font-size: 0.85rem;
   text-transform: uppercase; letter-spacing: 0.2em;
   color: #fff; background: none; border: none; outline: none;
+  display: none; /* shown via media query */
 }
 
 /* Mobile Menu */
@@ -449,8 +453,7 @@ body {
 }
 
 .app-frame-wrapper iframe {
-  width: 100%; height: 100%; display: block; filter: invert(0.9) hue-rotate(180deg); 
-  mix-blend-mode: lighten;
+  width: 100%; height: 100%; display: block;
 }
 
 /* =========================================
@@ -460,7 +463,7 @@ body {
   padding: 5rem 5% 10rem; background: var(--bg-dark);
 }
 .faq-container { max-width: 800px; margin: 0 auto; }
-.accordion-v3 { border-top: 1px solid rgba(255,255,255,0.1); }
+.accordion-v3 { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 3rem; }
 .acc-item { border-bottom: 1px solid rgba(255,255,255,0.1); }
 .acc-head {
   padding: 2rem 0; font-family: var(--font-body); font-size: 1.2rem; color: #fff;
@@ -503,7 +506,8 @@ body {
 }
 .link-hover:hover::after { transform: translateX(0); }
 
-.fade-up { opacity: 0; transform: translateY(40px); }
+/* Fade-up: only hide when JS has loaded (prevents invisible content without JS) */
+.js-loaded .fade-up { opacity: 0; transform: translateY(40px); }
 .section-title {
   font-family: var(--font-display); font-size: clamp(3rem, 8vw, 6rem);
   text-align: center; color: #fff; margin-bottom: 2rem;
@@ -515,10 +519,27 @@ body {
 
 @media(max-width: 1000px) {
   .nav-avant { padding: 1.5rem 2rem; }
+  .nav-menu-btn { display: block; }
   .h-panel-content { grid-template-columns: 1fr; text-align: center; }
   .h-desc-block { border-left: none; padding-left: 0; border-top: 1px solid var(--gold-muted); padding-top: 1.5rem; }
   .c-grid { grid-template-columns: 1fr; }
   .hero-badge { display: none; }
   .app-frame-wrapper { max-width: 90%; }
   .footer-v3 { flex-direction: column; text-align: center; }
+
+  /* Horizontal scroll → vertical on mobile */
+  .horizontal-scroll-wrapper { height: auto; overflow: visible; }
+  .horizontal-scroll-container { flex-direction: column; width: 100%; height: auto; }
+  .h-panel { width: 100%; height: auto; min-height: 60vh; padding: 4rem 5%; }
+  .h-bg-text { font-size: 15vw; top: 2rem; }
+  .h-title-block h2 { font-size: clamp(1.8rem, 8vw, 3rem); }
+}
+
+/* Scroll indicator fade out */
+.scroll-indicator-line {
+  transition: opacity 0.6s ease;
+}
+.scroll-indicator-line.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
